@@ -1,4 +1,4 @@
-pyautogui
 keyboard
 mss
 Pillow
+pynput
