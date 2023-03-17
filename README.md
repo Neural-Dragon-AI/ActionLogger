@@ -42,5 +42,5 @@ The captured data is saved in the specified output folder in the following forma
 - `mouse_positions.json`: A JSON file containing the captured mouse positions
 - `keyboard_buffer.json`: A JSON file containing the captured keyboard presses
 - `screen_timestamps.json`: A JSON file containing the timestamps of captured screen images
-- `screen_<timestamp>.png`: A series of PNG images containing the captured screen images, resized by the specified resize factor
+- `screen_id.png`: A series of PNG images containing the captured screen images, resized by the specified resize factor
 You can create a README.md file in your project folder and paste this content into it. Make sure to adjust the content as needed to fit your specific implementation or requirements.
