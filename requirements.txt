@@ -1,0 +1,4 @@
+pyautogui
+keyboard
+mss
+Pillow
