@@ -15,12 +15,26 @@ class ActionLogger:
         self.mouse_positions = []
         self.key_presses = []
         self.clicks = []
+        self.image_data = []
         self.output_folder = output_folder
         self.screen_counter = 0
         self.resize_factor = resize_factor
+        self.start_time = time.time()
 
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
+        self.save_meta_data()
+
+    def save_meta_data(self):
+        meta_data = {
+            'image_resolution': (int(mss().monitors[0]['width'] / self.resize_factor),
+                                 int(mss().monitors[0]['height'] / self.resize_factor)),
+            'start_time': self.start_time,
+            'rescale_factor': self.resize_factor
+        }
+
+        with open(os.path.join(self.output_folder, 'meta_data.json'), 'w') as outfile:
+            json.dump(meta_data, outfile)
 
     def log_mouse_position(self, x, y):
         timestamp = time.time()
@@ -67,6 +81,7 @@ class ActionLogger:
             resized_img = img.resize((int(screenshot.width / self.resize_factor), int(screenshot.height / self.resize_factor)))
             filename = os.path.join(self.output_folder, f'screen_{self.screen_counter}.png')
             resized_img.save(filename)
+            self.image_data.append({'image_path': filename, 'time': time.time()})
             self.screen_counter += 1
             return filename
 
@@ -87,6 +102,9 @@ class ActionLogger:
 
         with open(os.path.join(self.output_folder, 'clicks.json'), 'w') as outfile:
             json.dump(self.clicks, outfile)
+
+        with open(os.path.join(self.output_folder, 'image_data.json'), 'w') as outfile:
+            json.dump(self.image_data, outfile)
 
     def start(self):
         self.running = True
